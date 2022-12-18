@@ -1,4 +1,4 @@
-import Users from "../models/user.js"
+import { Users } from "../models/index"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
@@ -96,7 +96,6 @@ export const Login = async (req, res) => {
 }
 
 export const Topup = async (req, res) => {
-  console.log(req.body)
   try {
     const update = await Users.update(
       {
@@ -112,6 +111,22 @@ export const Topup = async (req, res) => {
         message: "BERHASIL",
         data: result,
       })
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const updateUser = async (req, res) => {
+  console.log(req.body, "ini update user")
+  try {
+    Users.update(req.body, {
+      where: {
+        id: req.body.id,
+      },
+    })
+    res.json({
+      message: "berhasil yey",
     })
   } catch (err) {
     console.log(err)
